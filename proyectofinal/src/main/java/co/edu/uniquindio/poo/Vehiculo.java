@@ -1,21 +1,33 @@
 package co.edu.uniquindio.poo;
 
+
 public abstract class Vehiculo {
 
     private String placa;
     private String modelo;
-    private String propietario;
+    public Propietario propietario;
+    public Administrador administrador;
+    public Registro registro;
 
+
+    
+    
 
     /*
      * Constructor de la clase Vehiculo
      */
-    public Vehiculo(String placa, String modelo, String propietario) {
+    public Vehiculo(String placa, String modelo,Propietario  propietario) {
+        assert placa != null :"La placa del vehiculo no puede ser nula";
+        assert modelo != null :"El modelo del vehiculo no puede ser nulo";
+        assert propietario != null :"El propietario del vehiculo no puede ser nulo";
+        
+        
         this.placa = placa;
         this.modelo = modelo;
-        this.propietario = propietario;
+        
     
     }
+
 
     /*
      * Metodos gets y sets
@@ -38,23 +50,50 @@ public abstract class Vehiculo {
         this.modelo = modelo;
     }
 
-    public String getPropietario() {
+    public Propietario getPropietario() {
         return propietario;
     }
 
-    public void setPropietario(String propietario) {
-        assert propietario != null : "El propietario del vehiculo no puede ser nulo";
+    public void setPropietario(Propietario propietario) {
         this.propietario = propietario;
     }
 
+    public Administrador getAdministrador() {
+        return administrador;
+    }
+
+    public Registro getRegistro(){
+        return registro;
+    }
 
 
     /*
      * Metodo que calcula el valor a pagar por el vehiculo
      */
-    public abstract double calcularCostoEstacionamiento(int horas);
+    public abstract double tarifaVehiculo();
 
-    
+
+    /*
+     * Metodo que cambia la tarifa del 
+     */
+    public void cambiarTarifaTotal(double tarifaTotal, Administrador administrador) {
+        if (administrador.esAdministrador()) {
+            administrador.setTarifaHora(tarifaTotal);
+            
+        } else {
+            System.out.println("Error: Solo el administrador puede cambiar la tarifa del vehículo.");
+        } 
+    }
+
+
+    /*
+     * Metodo para calcular la tarifa total del vehiculo
+     */
+    public double tarifaTotal(){
+        return administrador.getTarifaHora()* tarifaVehiculo();
+    }
+
+
 
     
 }

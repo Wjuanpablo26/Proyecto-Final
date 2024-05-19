@@ -11,6 +11,7 @@ public class Parqueadero {
     public Collection<Puesto> puestos;
     public Collection<Registro> registros;
     public Collection<Vehiculo> vehiculos;
+    public Collection<Propietario> propietarios;
 
 
     /*
@@ -69,17 +70,41 @@ public class Parqueadero {
     }
 
     /*
-     * Metodo para agregar un puesto al parqueadero
+     * Metodo para calcular el costo total de un vehiculo
      */
-    public void agregarPuesto(Puesto puesto) {
-        assert puesto != null : "El puesto no puede ser nulo";
-        puestos.add(puesto);
+    public double costoTotalVehiculo(Vehiculo vehiculo){
+        assert vehiculo != null :"El vehiculo no puede ser nulo";
+        double total=0;
+        for (Registro registro : registros){
+            if (registro.getPlaca().equals(vehiculo.getPlaca())){
+                total += registro.TiempoUso()* vehiculo.tarifaTotal();
+            }
+        }
+        return total;
     }
 
     /*
-     * Metodo para agregar un registro al parqueadero
+     * Metodo para identificar el propietario de un vehiculo
      */
+    public Vehiculo propietarioVehiculo(Propietario propietario){
+        assert propietario !=null : "El propietario no puede ser nulo";
+        for (Vehiculo vehiculo : vehiculos){
+            if (vehiculo.getPropietario().equals(propietario)){
+                return vehiculo;
+            }
+        }
+        return null;
+    }
+    
+
+
+}
+
+
+
+
+
+
 
 
     
-}
