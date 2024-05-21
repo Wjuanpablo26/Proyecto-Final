@@ -9,15 +9,29 @@ public class Carro extends Vehiculo{
      */
     public Carro(String placa, String modelo,Propietario propietario, Registro registro) {
         super(placa,modelo,propietario);
-
     }
 
     /*
-     * Metodo que calcula el valor a pagar por el vehiculo
+     * Metodos gets y sets
      */
-    public double tarifaVehiculo(){
-        return 5000;
+    public double getTarifaVehiculo() {
+        return getTarifaVehiculo();
+    }
 
+    public void setTarifaVehiculo(double tarifaVehiculo) {
+        assert tarifaVehiculo > 0 : "La tarifa del vehiculo no puede ser negativa";
+        this.tarifaVehiculo = tarifaVehiculo;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Carro{" +
+                "placa='" + getPlaca() + '\'' +
+                ", modelo='" + getModelo() + '\'' +
+                ", propietario=" + getPropietario() +
+                '}';
     }
 
     

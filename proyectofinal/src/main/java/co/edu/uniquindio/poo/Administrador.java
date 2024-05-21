@@ -1,49 +1,34 @@
 package co.edu.uniquindio.poo;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Administrador extends Persona{
 
-    private double tarifaHora;
-    private Vehiculo vehiculo;
+    public Vehiculo vehiculo;
+    public Vehiculo tarifaVehiculo;
+
 
     /*
      * Constructor de la clase Administrador
      */
-    public Administrador(String nombre, double tarifaHora){
+    public Administrador(String nombre){
         super(nombre);
-        assert tarifaHora > 0 : "La tarifa por hora no puede ser negativa";
-        this.tarifaHora = tarifaHora;
     }
+
+    
 
     /*
      * Metodos gets y sets
      */
-    public double getTarifaHora(){
-        return tarifaHora;
-    }
-
-
-    public void setTarifaHora(double tarifaHora){
-        assert tarifaHora > 0 : "La tarifa por hora no puede ser negativa";
-        this.tarifaHora = tarifaHora;
-    }
-
-
     public Vehiculo getVehiculo(){
         return vehiculo;
     }
-
 
     public Vehiculo getTarifaVehiculo(){
         return getTarifaVehiculo();
     }
 
-
-    public void setTarifaVehiculo(Vehiculo vehiculo){
-        assert vehiculo != null : "El vehiculo no puede ser nulo";
-        this.vehiculo = vehiculo;
-    }
-
-    
     /*
      * Metodo para verificar que si sea un administrador
      */
@@ -51,6 +36,58 @@ public class Administrador extends Persona{
         return true;
     }
 
+    /*
+     * Metodo para definir la tarifa de cada vehiculo
+     */
+    public double tarifaVehiculo(Vehiculo vehiculo,double tarifaVehiculo){
+        if(vehiculo instanceof Moto){
+            Moto moto = (Moto) vehiculo;
+            if (moto.getTipo() == TipoMoto.CLASICA) {
+                moto.setTarifaVehiculo(tarifaVehiculo);
+                return tarifaVehiculo;
+            } else if (moto.getTipo() == TipoMoto.HIBRIDA) {
+                moto.setTarifaVehiculo(tarifaVehiculo);
+                return tarifaVehiculo;
+            }
+        } else if(vehiculo instanceof Carro){
+            Carro carro = (Carro) vehiculo;
+            carro.setTarifaVehiculo(tarifaVehiculo);
+            return tarifaVehiculo;
+        }
+        return 0;
+    }
 
+    /*
+     * Metodo para crear lista con el valor de la tarifa de cada vehiculo
+     */
+    public List<Double> listaTarifas(List<Vehiculo> vehiculos) {
+    List<Double> tarifas = new ArrayList<>();
+    for (Vehiculo vehiculo : vehiculos) {
+        tarifas.add(vehiculo.getTarifaVehiculo());
+    }
+    return tarifas;
+    }
+
+
+    /*
+     * Metodo para cambiar la tarifa de un vehiculo
+     */
+    public void cambiarTarifaVehiculo(Vehiculo vehiculo, double tarifaVehiculo){
+        if(vehiculo instanceof Moto){
+            Moto moto = (Moto) vehiculo;
+            if (moto.getTipo() == TipoMoto.CLASICA) {
+                moto.setTarifaVehiculo(tarifaVehiculo);
+            } else if (moto.getTipo() == TipoMoto.HIBRIDA) {
+                moto.setTarifaVehiculo(tarifaVehiculo);
+            }
+        } 
+        else if(vehiculo instanceof Carro){
+            Carro carro = (Carro) vehiculo;
+            carro.setTarifaVehiculo(tarifaVehiculo);
+        }
+    }
+
+
+    
     
 }

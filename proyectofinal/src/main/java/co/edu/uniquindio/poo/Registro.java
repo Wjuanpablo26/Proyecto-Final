@@ -51,15 +51,4 @@ public Registro(LocalTime horaIngreso,LocalTime horaSalida){
         return horaSalida.getHour() - horaIngreso.getHour();
     }
 
-    
-
-
-
-
-
-    
-
-
-
-
 }

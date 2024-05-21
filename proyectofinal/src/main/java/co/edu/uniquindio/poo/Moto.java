@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo;
 public class Moto extends Vehiculo{
 
     public double velocidadMaxima;
+    private TipoMoto tipo;
 
     /*
      * Constructor de la clase Moto
@@ -21,6 +22,21 @@ public class Moto extends Vehiculo{
         return velocidadMaxima;
     }
 
+    public TipoMoto getTipo() {
+        return tipo;
+    }
+
+    public double getTarifaVehiculo(){
+        return getTarifaVehiculo();
+    }
+
+    public void setTarifaVehiculo(double tarifaVehiculo){
+        assert tarifaVehiculo > 0 : "La tarifa del vehiculo no puede ser negativa";
+        this.tarifaVehiculo = tarifaVehiculo;
+    }
+
+
+
     /*
      * Metodo set
      */
@@ -30,15 +46,15 @@ public class Moto extends Vehiculo{
     }
 
     /*
-     * Metodo que calcula el valor a pagar por el vehiculo
+     * Metodo para obtener la informacion de la moto
      */
-    public double tarifaVehiculo(){
-        return 2000;
+    public String toString(){
+        return "Moto: Placa: "+getPlaca()+'/'+
+        " Modelo: "+getModelo()+'/'+
+        " Velocidad Maxima: "+getVelocidadMaxima()+'/'+
+        " Tipo: "+getTipo()+'/'+
+        "Propietario: "+getPropietario();
     }
-
-
-    
-
 
 
     

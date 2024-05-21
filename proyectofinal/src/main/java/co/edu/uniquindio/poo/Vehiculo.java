@@ -5,6 +5,7 @@ public abstract class Vehiculo {
 
     private String placa;
     private String modelo;
+    public double tarifaVehiculo;
     public Propietario propietario;
     public Administrador administrador;
     public Registro registro;
@@ -19,9 +20,9 @@ public abstract class Vehiculo {
     public Vehiculo(String placa, String modelo,Propietario  propietario) {
         assert placa != null :"La placa del vehiculo no puede ser nula";
         assert modelo != null :"El modelo del vehiculo no puede ser nulo";
+        assert tarifaVehiculo > 0 :"La tarifa del vehiculo no puede ser negativa";  
         assert propietario != null :"El propietario del vehiculo no puede ser nulo";
-        
-        
+
         this.placa = placa;
         this.modelo = modelo;
         
@@ -50,6 +51,10 @@ public abstract class Vehiculo {
         this.modelo = modelo;
     }
 
+    public double getTarifaVehiculo() {
+        return tarifaVehiculo;
+    }
+
     public Propietario getPropietario() {
         return propietario;
     }
@@ -66,32 +71,6 @@ public abstract class Vehiculo {
         return registro;
     }
 
-
-    /*
-     * Metodo que calcula el valor a pagar por el vehiculo
-     */
-    public abstract double tarifaVehiculo();
-
-
-    /*
-     * Metodo que cambia la tarifa del 
-     */
-    public void cambiarTarifaTotal(double tarifaTotal, Administrador administrador) {
-        if (administrador.esAdministrador()) {
-            administrador.setTarifaHora(tarifaTotal);
-            
-        } else {
-            System.out.println("Error: Solo el administrador puede cambiar la tarifa del vehículo.");
-        } 
-    }
-
-
-    /*
-     * Metodo para calcular la tarifa total del vehiculo
-     */
-    public double tarifaTotal(){
-        return administrador.getTarifaHora()* tarifaVehiculo();
-    }
 
 
 
