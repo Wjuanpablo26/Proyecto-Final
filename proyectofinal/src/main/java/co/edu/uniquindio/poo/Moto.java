@@ -26,6 +26,10 @@ public class Moto extends Vehiculo{
         return tipo;
     }
 
+    public void setTipo(TipoMoto tipo) {
+        this.tipo = tipo;
+    }
+
     public double getTarifaVehiculo(){
         return getTarifaVehiculo();
     }

@@ -1,7 +1,7 @@
 package co.edu.uniquindio.poo;
 
 
-public abstract class Vehiculo {
+public abstract  class Vehiculo {
 
     private String placa;
     private String modelo;
@@ -25,10 +25,19 @@ public abstract class Vehiculo {
 
         this.placa = placa;
         this.modelo = modelo;
+        this.propietario = propietario;
         
     
     }
+    
 
+    /*
+     * Constrctuor vacio de la clase Vehiculo sin atributos declarados
+     * 
+     */ 
+
+    public Vehiculo() {
+    }
 
     /*
      * Metodos gets y sets

@@ -7,17 +7,20 @@ public class Registro {
 
     public LocalTime horaIngreso;
     public LocalTime horaSalida;
+    public boolean pago;
     public Vehiculo vehiculo;
 
     
     /*
     *constructor de la clase Registro
     */
-public Registro(LocalTime horaIngreso,LocalTime horaSalida){
+public Registro(LocalTime horaIngreso,LocalTime horaSalida,Vehiculo vehiculo){
     assert horaIngreso != null : "La hora de ingreso no puede ser nula";
     assert horaSalida != null : "La hora de salida no puede ser nula";
+    this.pago=false;
     this.horaIngreso = horaIngreso;
     this.horaSalida = horaSalida;
+    this.vehiculo=vehiculo;
     }
 
     /*
@@ -31,9 +34,6 @@ public Registro(LocalTime horaIngreso,LocalTime horaSalida){
     return horaSalida;
     }
 
-    public Vehiculo getVehiculo(){
-    return vehiculo;
-    }
 
     public Vehiculo getPlaca(){
         return getPlaca();

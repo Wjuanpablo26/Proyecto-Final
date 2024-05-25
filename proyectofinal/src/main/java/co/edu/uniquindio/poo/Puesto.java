@@ -4,6 +4,7 @@ public class Puesto {
 
     private int posicionI, posicionJ;
     private boolean disponible;
+    private Vehiculo vehiculo;
 
     /*
      * Constructor de la clase Puesto
@@ -35,6 +36,14 @@ public class Puesto {
     public void setPosicionJ(int posicionJ){
         assert posicionJ >= 0 : "La posicion J no puede ser negativa";
         this.posicionJ = posicionJ;
+    }
+
+    public Vehiculo getVehiculo(){
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo){
+        this.vehiculo = vehiculo;
     }
 
     /*
