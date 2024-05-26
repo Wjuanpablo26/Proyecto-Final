@@ -64,6 +64,8 @@ public class Puesto {
     public boolean estaOcupado(){
         return !disponible;
 
+    
+
     }
 
 

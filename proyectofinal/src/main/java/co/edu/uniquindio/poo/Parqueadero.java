@@ -5,16 +5,17 @@ import java.util.LinkedList;
 import java.time.LocalTime;
 
 
-
 public class Parqueadero {
 
     private String nombre;
+    private double recaudadoDia;
+    private double recaudadoMes;
     public Puesto[][] puestos;
     public Collection<Registro> registros;
     public Collection<Vehiculo> vehiculos;
     public Collection<Propietario> propietarios;
     public Collection<Administrador> administradores;
-
+    public Administrador administrador;
 
     /*
      * Constructor de la clase Parqueadero
@@ -37,6 +38,24 @@ public class Parqueadero {
     public void setNombre(String nombre) {
         assert nombre != null : "El nombre del parqueadero no puede ser nulo";
         this.nombre = nombre;
+    }
+
+    public double getRecaudadoDia() {
+        return recaudadoDia;
+    }
+
+    public void setRecaudadoDia(double recaudadoDia) {
+        assert recaudadoDia > 0 : "La recaudacion del dia no puede ser negativa";
+        this.recaudadoDia = recaudadoDia;
+    }
+
+    public double getRecaudadoMes() {
+        return recaudadoMes;
+    }
+
+    public void setRecaudadoMes(double recaudadoMes) {
+        assert recaudadoMes > 0 : "La recaudacion del mes no puede ser negativa";
+        this.recaudadoMes = recaudadoMes;
     }
 
     public Puesto[][] getPuestos() {
@@ -79,11 +98,9 @@ public class Parqueadero {
         this.administradores = administradores;
     }
 
-    /*
-     * Main
-     */
-
-    
+    public Administrador getAdministrador() {
+        return administrador;
+    }    
 
     /*
      * Metodo para mostrar la matriz
@@ -119,7 +136,6 @@ public class Parqueadero {
     /*
      * Metodo para agregar un vehiculo al parqueadero
      */
-    
     public void agregarVehiculo(Vehiculo vehiculo) {
         Scanner scaner = new Scanner(System.in);
 
@@ -160,13 +176,14 @@ public class Parqueadero {
         vehiculos.add(vehiculo);
         System.out.println("Vehiculo agregado correctamente\n");
         ingresarVehiculo(vehiculo);
+        scaner.close();
         
 
         
     }
 
     /*
-     * Metodo para ingresar un vehiculo del parqueadero
+     * Metodo para ingresar un vehiculo del parqueadero, agrega registro y verificar si el puesto esta ocupado o disponible
      */
     public void ingresarVehiculo(Vehiculo vehiculo) {
         for (int i = 0; i < puestos.length; i++) {
@@ -194,14 +211,14 @@ public class Parqueadero {
         double total=0;
         boolean esVehiculoValido = false;
         for (Registro registro : registros){
-            if (registro.getPlaca().equals(vehiculo.getPlaca())){
+            if (registro.getVehiculo().getPlaca().equals(vehiculo.getPlaca())){
                 esVehiculoValido = true;
                 break;
             }
         }
         if (esVehiculoValido) {
             for (Registro registro : registros){
-                total += registro.TiempoUso()*administrador.tarifaVehiculo(vehiculo,vehiculo.getTarifaVehiculo());
+                total += registro.TiempoUso()*(administrador.tarifaVehiculo(vehiculo,vehiculo.getTarifaVehiculo()));
             }
         }
         return total;
@@ -210,22 +227,25 @@ public class Parqueadero {
     /*
      * Metodo para retirar un vehiculo del parqueadero
      */
-    public void retirarVehiculo(Vehiculo vehiculo){
+    public void retirarVehiculo(Vehiculo vehiculo, Administrador administrador){
         assert vehiculo != null : "El vehiculo no puede ser nulo";
         for (int i = 0; i < puestos.length; i++) {
             for (int j = 0; j < puestos[i].length; j++) {
-                if (puestos[i][j].getVehiculo().equals(vehiculo)){
+                if (puestos[i][j].getVehiculo().getPlaca().equals(vehiculo.getPlaca())){
                     puestos[i][j].setVehiculo(null);
                     puestos[i][j].setDisponible(true);
                     Registro registro = new Registro(null,LocalTime.now(),vehiculo);
                     registros.add(registro);
-                    System.out.println("Vehiculo retirado correctamente del puesto\n"+
+                    double total = costoTotalVehiculo(vehiculo, administrador);
+                    actualizarRecaudaciones(total);
+                    System.out.println("Vehiculo ha sido retirado correctamente del puesto\n"+
                                         "["+i+","+j+"]\n");
                     return;
                 }
             }
         }
     }
+
     
 
     /*
@@ -241,6 +261,7 @@ public class Parqueadero {
         return null;
     }
 
+
     /*
      * Metodo para buscar un vehiculo por placa
      */
@@ -254,9 +275,61 @@ public class Parqueadero {
         return null;
     }
 
-    /*
-     * 
+
+
+    /**
+     * Actualiza las recaudaciones diarias y mensuales con una nueva tarifa.
+     *
+     * @param tarifa Tarifa a añadir a las recaudaciones.
      */
+    private void actualizarRecaudaciones(double tarifa) {
+        recaudadoDia += tarifa; // Incrementa el total recaudado diario
+        recaudadoMes += tarifa; // Incrementa el total recaudado mensual
+    }
+
+    /**
+     * Genera y muestra un reporte diario de recaudación, desglosado por tipo de vehículo.
+     */
+    public void generarReporteDiario() {
+        System.out.println("Reporte Diario:");
+        System.out.println("Total recaudado: " + recaudadoDia);
+        System.out.println("Desglosado por tipo de vehículo:");
+    
+        double totalCarros = 0;
+        double totalMotosClasicas = 0;
+        double totalMotosHibridas = 0;
+    
+        for (Registro registro : registros) {
+            if (registro.getHoraSalida() != null) {
+                if (registro.getVehiculo() instanceof Carro) {
+                    totalCarros += costoTotalVehiculo(registro.getVehiculo(), administrador);
+                } else if (registro.getVehiculo() instanceof Moto) {
+                    Moto moto = (Moto) registro.getVehiculo();
+                    if (moto.getTipo() == TipoMoto.CLASICA) {
+                        totalMotosClasicas += costoTotalVehiculo(registro.getVehiculo(), administrador);
+                    } else if (moto.getTipo() == TipoMoto.HIBRIDA) {
+                        totalMotosHibridas += costoTotalVehiculo(registro.getVehiculo(), administrador);
+                    }
+                }
+            }
+        }
+    
+        System.out.println("Carros: " + totalCarros);
+        System.out.println("Motos Clásicas: " + totalMotosClasicas);
+        System.out.println("Motos Híbridas: " + totalMotosHibridas);
+        recaudadoDia = 0; // Reset diario
+    }
+
+    /**
+     * Genera y muestra un reporte mensual de recaudación.
+     */
+    public void generarReporteMensual() {
+        System.out.println("Reporte Mensual:");
+        System.out.println("Total recaudado: " + recaudadoMes);
+        recaudadoMes = 0; // Reset mensual
+
+    
+    }
 
     
 

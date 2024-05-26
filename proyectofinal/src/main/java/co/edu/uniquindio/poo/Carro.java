@@ -2,7 +2,6 @@ package co.edu.uniquindio.poo;
 
 public class Carro extends Vehiculo{
 
-    private Registro registros;
 
     /*
      * Constructor de la clase Carro

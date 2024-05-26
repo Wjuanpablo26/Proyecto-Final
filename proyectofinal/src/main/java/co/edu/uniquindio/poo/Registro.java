@@ -9,6 +9,9 @@ public class Registro {
     public LocalTime horaSalida;
     public boolean pago;
     public Vehiculo vehiculo;
+    public Moto tipoMoto;
+    public Parqueadero parqueadero;
+
 
     
     /*
@@ -30,7 +33,7 @@ public Registro(LocalTime horaIngreso,LocalTime horaSalida,Vehiculo vehiculo){
     return horaIngreso;
     }
 
-    public LocalTime getHorSalida(){
+    public LocalTime getHoraSalida(){
     return horaSalida;
     }
 
@@ -50,5 +53,17 @@ public Registro(LocalTime horaIngreso,LocalTime horaSalida,Vehiculo vehiculo){
     public long TiempoUso(){
         return horaSalida.getHour() - horaIngreso.getHour();
     }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+
+    
+    public Parqueadero getCostoTotalVehiculo(){
+        return getCostoTotalVehiculo();
+    }
+
+    
 
 }

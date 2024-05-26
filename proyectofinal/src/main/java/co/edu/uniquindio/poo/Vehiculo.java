@@ -32,7 +32,7 @@ public abstract  class Vehiculo {
     
 
     /*
-     * Constrctuor vacio de la clase Vehiculo sin atributos declarados
+     * Constructor vacio de la clase Vehiculo sin atributos declarados
      * 
      */ 
 
