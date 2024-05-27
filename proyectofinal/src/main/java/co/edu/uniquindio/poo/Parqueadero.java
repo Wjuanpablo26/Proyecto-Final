@@ -182,17 +182,19 @@ public class Parqueadero {
         
     }
 
+
     /*
      * Metodo para ingresar un vehiculo del parqueadero, agrega registro y verificar si el puesto esta ocupado o disponible
      */
     public void ingresarVehiculo(Vehiculo vehiculo) {
         for (int i = 0; i < puestos.length; i++) {
             for (int j = 0; j < puestos[i].length; j++) {
-                if(puestos[i][j].estaDisponible()){
-                    puestos[i][j].setVehiculo(vehiculo);
-                    puestos[i][j].setDisponible(false);
+                if(puestos[i][j].estaDisponible()){//Verifica si el puesto esta disponible
+                    puestos[i][j].setVehiculo(vehiculo);//Agrega el vehiculo al puesto
+                    puestos[i][j].setDisponible(false);//Cambia el estado del puesto a ocupado
                     Registro registro = new Registro(LocalTime.now(),null,vehiculo);
                     registros.add(registro);
+                    
                     System.out.println("Vehiculo ingresado correctamente en el puesto\n"+
                                         "["+i+","+j+"]\n");
                     return;
@@ -200,6 +202,22 @@ public class Parqueadero {
             }
         }
         
+    }
+
+    /*
+     * Metodo para buscar un vehiculo en el parqueadero por la placa
+     */
+    public void buscarVehiculoParqueadero(Vehiculo vehiculo){
+        assert vehiculo != null : "El vehiculo no puede ser nulo";
+        for (int i = 0; i < puestos.length; i++) {
+            for (int j = 0; j < puestos[i].length; j++) {
+                if (puestos[i][j].getVehiculo().getPlaca().equals(vehiculo.getPlaca())){
+                    System.out.println("Vehiculo encontrado en el puesto\n"+
+                                        "["+i+","+j+"]\n");
+                    return;
+                }
+            }
+        }
     }
 
 
@@ -249,13 +267,13 @@ public class Parqueadero {
     
 
     /*
-     * Metodo para identificar el propietario de un vehiculo
+     * Metodo para identificar el propietario de un vehiculo por la placa
      */
-    public Vehiculo propietarioVehiculo(Propietario propietario){
-        assert propietario !=null : "El propietario no puede ser nulo";
+    public Propietario propietarioVehiculo(String placa){
+        assert placa != null : "La placa no puede ser nula";
         for (Vehiculo vehiculo : vehiculos){
-            if (vehiculo.getPropietario().equals(propietario)){
-                return vehiculo;
+            if (vehiculo.getPlaca().equals(placa)){
+                return vehiculo.getPropietario();
             }
         }
         return null;
@@ -330,6 +348,7 @@ public class Parqueadero {
 
     
     }
+
 
     
 

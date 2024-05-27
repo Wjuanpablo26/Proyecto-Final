@@ -6,6 +6,10 @@ public class App {
 
     private Puesto puestos;
     private Parqueadero parqueadero;    
+
+    /*
+     * Metodo principal de la aplicacion
+     */
     
     public static void main(String[] args) {
         //Creamos la calse escaner que nos va a ayudar
@@ -33,6 +37,8 @@ public class App {
         //Creamos nuestro parqueadero
         Parqueadero parqueadero = new Parqueadero(nombre, puestos);
         int opc=0;
+
+        //Menu de opciones
         do{
             System.out.println(" Que quieres hacer? :\n1. Agregar un vehiculo\n" +
                                 "2. Retirar un vehiculo\n" +
@@ -42,6 +48,8 @@ public class App {
                                 "6. Salir\n");                                 
             opc= scaner.nextInt();
             switch (opc) {
+
+                //Agregar un vehiculo
                 case 1:
                     System.out.println("Ingrese el tipo de vehiculo:\n1.Moto\n2.Carro");
                     Vehiculo vehiculo = null;
@@ -70,7 +78,6 @@ public class App {
                         } else if (tipo == 2){
                         moto.setTipo(TipoMoto.HIBRIDA);
                         System.out.println("El vehiculo se ha agregado correctamente\n");
-                        
                         }
                         break;
                         case 2:
@@ -88,6 +95,7 @@ public class App {
                         break;
                             }
                     break;
+                    //Retirar un vehiculo
                 case 2:
                     System.out.println("Ingrese la placa del vehiculo que desea retirar:");
                     String placa = scaner.nextLine();
@@ -102,6 +110,8 @@ public class App {
                         System.out.println("El vehiculo no se encuentra en el parqueadero\n");
                     }
                 break;
+
+                //Identificar al propietario de un vehiculo
                 case 3:
                     System.out.println("Ingrese la placa del vehiculo que desea buscar:");
                     String placaBuscar = scaner.nextLine();
@@ -113,8 +123,12 @@ public class App {
                         System.out.println("El vehiculo no se encuentra en el parqueadero\n");
                     }
                 break;
+
+                //Generar reporte
                 case 4:
-                System.out.println("Ingrese la opcion de reporte que desea generar:\n  1.Reporte diario:\n 2.Reporte Mensual:");
+                System.out.println("Ingrese la opcion de reporte que desea generar:\n" 
+                +  "1.Reporte diario:\n"+
+                "2.Reporte Mensual:");
                 int tipoReporte = scaner.nextInt();
                 switch (tipoReporte) {
                     case 1:
@@ -126,13 +140,15 @@ public class App {
                 }
                     
                 break;
+
+                //Cambiar la tarifa de un vehiculo
                 case 5:
-                    System.out.println("Ingrese el tipo de vehiculo al que desea cambiar la tarifa:\n1.Moto\n2.Carro");
+                    System.out.println("Ingrese el tipo de vehiculo al que desea cambiar la tarifa:\n"+"1.Moto\n"+"2.Carro");
                     Moto moto=null;
                     int tipoVehiculo1 = scaner.nextInt();
                     switch (tipoVehiculo1) {
                         case 1:
-                        System.out.println("Ingrese el tipo de moto al que desea cambiar la tarifa:\\n 1.Moto clasica\\n 2.Moto hibrida");
+                        System.out.println("Ingrese el tipo de moto al que desea cambiar la tarifa:\n"+ "1.Moto clasica\\n"+ "2.Moto hibrida");
                         int tipo = scaner.nextInt();
                         if (tipo == 1){
                             System.out.println("Ingrese la nueva tarifa de la moto clasica:");
@@ -160,6 +176,8 @@ public class App {
                         
                     
                 break;
+
+                //Salir
                 case 6:
                 System.out.println("Gracias por usar nuestro servicio");
                 opc=0;
@@ -168,14 +186,12 @@ public class App {
                 break;
             
                 default:
-                System.out.println("Ingreso una opcion incorrecta");;
+                System.out.println("Ingreso una opcion incorrecta");
                 break;
             }
             
         }while(opc!=0); 
     }
-
-
 
     /*
      * Metodo para mostrar la matriz

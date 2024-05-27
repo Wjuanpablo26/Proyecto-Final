@@ -20,7 +20,6 @@ public abstract  class Vehiculo {
     public Vehiculo(String placa, String modelo,Propietario  propietario) {
         assert placa != null :"La placa del vehiculo no puede ser nula";
         assert modelo != null :"El modelo del vehiculo no puede ser nulo";
-        assert tarifaVehiculo > 0 :"La tarifa del vehiculo no puede ser negativa";  
         assert propietario != null :"El propietario del vehiculo no puede ser nulo";
 
         this.placa = placa;
