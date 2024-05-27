@@ -1,6 +1,5 @@
 package co.edu.uniquindio.poo;
 
-
 import java.time.LocalTime;
 
 public class Registro {
@@ -12,34 +11,31 @@ public class Registro {
     public Moto tipoMoto;
     public Parqueadero parqueadero;
 
-
-    
     /*
-    *constructor de la clase Registro
-    */
-public Registro(LocalTime horaIngreso,LocalTime horaSalida,Vehiculo vehiculo){
-    assert horaIngreso != null : "La hora de ingreso no puede ser nula";
-    assert horaSalida != null : "La hora de salida no puede ser nula";
-    this.pago=false;
-    this.horaIngreso = horaIngreso;
-    this.horaSalida = horaSalida;
-    this.vehiculo=vehiculo;
+     * constructor de la clase Registro
+     */
+    public Registro(LocalTime horaIngreso, LocalTime horaSalida, Vehiculo vehiculo) {
+        assert horaIngreso != null : "La hora de ingreso no puede ser nula";
+        assert horaSalida != null : "La hora de salida no puede ser nula";
+        this.pago = false;
+        this.horaIngreso = horaIngreso;
+        this.horaSalida = horaSalida;
+        this.vehiculo = vehiculo;
     }
 
     /*
-    *metodo gets y sets
-    */
-    public LocalTime getHoraIngreso(){
-    return horaIngreso;
+     * metodo gets y sets
+     */
+    public LocalTime getHoraIngreso() {
+        return horaIngreso;
     }
 
-    public LocalTime getHoraSalida(){
-    return horaSalida;
+    public LocalTime getHoraSalida() {
+        return horaSalida;
     }
 
-
-    public Vehiculo getPlaca(){
-        return getPlaca();
+    public String getPlaca() {
+        return vehiculo.getPlaca();
     }
 
     public void setHoraIngreso(LocalTime horaIngreso) {
@@ -50,7 +46,7 @@ public Registro(LocalTime horaIngreso,LocalTime horaSalida,Vehiculo vehiculo){
         this.horaSalida = horaSalida;
     }
 
-    public long TiempoUso(){
+    public long TiempoUso() {
         return horaSalida.getHour() - horaIngreso.getHour();
     }
 
@@ -58,12 +54,18 @@ public Registro(LocalTime horaIngreso,LocalTime horaSalida,Vehiculo vehiculo){
         return vehiculo;
     }
 
-
-    
-    public Parqueadero getCostoTotalVehiculo(){
+    public Parqueadero getCostoTotalVehiculo() {
         return getCostoTotalVehiculo();
     }
 
-    
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    @Override
+    public String toString() {
+        return "Registro [horaIngreso=" + horaIngreso + ", horaSalida=" + horaSalida + ", pago=" + pago + ", vehiculo="
+                + vehiculo.toString() + ", tipoMoto=" + tipoMoto + ", parqueadero=" + parqueadero + "]";
+    }
 
 }

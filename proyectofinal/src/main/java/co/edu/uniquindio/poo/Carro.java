@@ -1,13 +1,13 @@
 package co.edu.uniquindio.poo;
 
-public class Carro extends Vehiculo{
-
+public class Carro extends Vehiculo {
 
     /*
      * Constructor de la clase Carro
      */
-    public Carro(String placa, String modelo,Propietario propietario) {
-        super(placa,modelo,propietario);
+    public Carro(String placa, String modelo, Propietario propietario, Registro registro) {
+        super(placa, modelo, propietario, registro);
+
     }
 
     /*
@@ -22,8 +22,6 @@ public class Carro extends Vehiculo{
         this.tarifaVehiculo = tarifaVehiculo;
     }
 
-
-
     @Override
     public String toString() {
         return "Carro{" +
@@ -33,11 +31,4 @@ public class Carro extends Vehiculo{
                 '}';
     }
 
-    
-
-    
-
-
-    
-    
 }

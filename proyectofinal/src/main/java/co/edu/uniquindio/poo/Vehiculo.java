@@ -1,7 +1,6 @@
 package co.edu.uniquindio.poo;
 
-
-public abstract  class Vehiculo {
+public abstract class Vehiculo {
 
     private String placa;
     private String modelo;
@@ -10,31 +9,27 @@ public abstract  class Vehiculo {
     public Administrador administrador;
     public Registro registro;
 
-
-    
-    
-
     /*
      * Constructor de la clase Vehiculo
      */
-    public Vehiculo(String placa, String modelo,Propietario  propietario) {
-        assert placa != null :"La placa del vehiculo no puede ser nula";
-        assert modelo != null :"El modelo del vehiculo no puede ser nulo";
-        assert tarifaVehiculo > 0 :"La tarifa del vehiculo no puede ser negativa";  
-        assert propietario != null :"El propietario del vehiculo no puede ser nulo";
-
+    public Vehiculo(String placa, String modelo, Propietario propietario, Registro registro) {
         this.placa = placa;
         this.modelo = modelo;
         this.propietario = propietario;
-        
-    
+        this.registro = registro;
+
+        assert placa != null : "La placa del vehiculo no puede ser nula";
+        assert modelo != null : "El modelo del vehiculo no puede ser nulo";
+        assert tarifaVehiculo > 0 : "La tarifa del vehiculo no puede ser negativa";
+        assert propietario != null : "El propietario del vehiculo no puede ser nulo";
+        assert registro != null : "El registro no puede ser nulo";
+
     }
-    
 
     /*
      * Constructor vacio de la clase Vehiculo sin atributos declarados
      * 
-     */ 
+     */
 
     public Vehiculo() {
     }
@@ -76,12 +71,15 @@ public abstract  class Vehiculo {
         return administrador;
     }
 
-    public Registro getRegistro(){
+    public Registro getRegistro() {
         return registro;
     }
 
+    @Override
+    public String toString() {
+        return "Vehiculo [placa=" + placa + ", modelo=" + modelo + ", tarifaVehiculo=" + tarifaVehiculo
+                + ", propietario=" + propietario + ", administrador=" + administrador + ", registro="
+                + registro.toString() + "]";
+    }
 
-
-
-    
 }
