@@ -24,13 +24,6 @@ public class App {
         int posicionI = scanerInt.nextInt();
         System.out.println("Ingrese la otra dimension del parqueadero:");
         int posicionJ = scanerInt.nextInt();
-        //PEDIR DATOS PARA LOS COSTOS DE LOS VEHICULOS
-        //System.out.println("Ingrese el costo de la moto clasica:");
-        //double costoMotoClasica = scanerDouble.nextDouble();
-        //System.out.println("Ingrese el costo de la moto hibrida:");
-        //double costoMotoHibrida = scanerDouble.nextDouble();
-        //System.out.println("Ingrese el costo del carro:");
-        //double costoCarro = scanerDouble.nextDouble();
 
 
         /*
@@ -76,8 +69,6 @@ public class App {
                         Propietario propietario = new Propietario(nombre2);
                         System.out.println("Ingrese la velocidad maxima de la moto:");
                         double velocidadMaxima = scanerDouble.nextDouble();
-                        
-                        //scaner.nextLine();
                         System.out.println("Ingrese el tipo de moto:");
                         System.out.println("1. Clasica");
                         System.out.println("2. Hibrida");
@@ -95,13 +86,11 @@ public class App {
                         case 2:
                         System.out.println("Ingrese la placa del carro:");
                         String placa1 = scanerString.nextLine();
-                        //scaner.nextLine();
                         System.out.println("Ingrese el modelo del carro:");
                         String modelo1 = scanerString.nextLine();
                         System.out.println("Ingrese el nombre del propietario del carro:");
                         String nombre1 = scanerString.nextLine();
                         Propietario propietario1 = new Propietario(nombre1);
-
                         Carro carro = new Carro(placa1, modelo1, propietario1);
                         parqueadero.guardarCarro(carro);
                         System.out.println("El vehiculo se ha agregado correctamente\n");
@@ -126,7 +115,6 @@ public class App {
                 case 3:
                     System.out.println("Ingrese la placa del vehiculo que desea buscar:");
                     String placaBuscar = scanerString.nextLine();
-                    //scaner.nextLine();
                     Vehiculo vehiculoBuscar = parqueadero.buscarVehiculo(placaBuscar);
                     if (vehiculoBuscar != null){
                         System.out.println("El propietario del vehiculo es: "+vehiculoBuscar.getPropietario().getNombre()+"\n");
@@ -159,7 +147,7 @@ public class App {
                     int tipoVehiculo1 = scanerInt.nextInt();
                     switch (tipoVehiculo1) {
                         case 1:
-                        System.out.println("Ingrese el tipo de moto al que desea cambiar la tarifa:\n"+ "1.Moto clasica\\n"+ "2.Moto hibrida");
+                        System.out.println("Ingrese el tipo de moto al que desea cambiar la tarifa:\n"+ "1.Moto clasica\n"+ "2.Moto hibrida");
                         int tipo = scanerInt.nextInt();
                         if (tipo == 1){
                             System.out.println("Ingrese la nueva tarifa de la moto clasica:");
@@ -202,6 +190,9 @@ public class App {
             }
             
         }while(opc!=0); 
+        scanerDouble.close();
+        scanerInt.close();
+        scanerString.close();
     }
 
     /*

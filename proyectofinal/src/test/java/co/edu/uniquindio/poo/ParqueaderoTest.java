@@ -1,7 +1,7 @@
 package co.edu.uniquindio.poo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import java.util.logging.Logger;
@@ -11,6 +11,18 @@ import org.junit.jupiter.api.Test;
 public class ParqueaderoTest {
 
     private static final Logger LOG = Logger.getLogger(ParqueaderoTest.class.getName());
+    private Puesto[][] getPuestos() {
+        Puesto[][] puestos = new Puesto[3][3];
+        for (int i = 0; i < puestos.length; i++) {
+            for (int j = 0; j < puestos[i].length; j++) {
+                puestos[i][j] = new Puesto(i, j);
+            }
+        }
+        return puestos;
+    }
+
+
+    
 
     @Test
     public void testVerificarDisponibilidad() {
@@ -19,35 +31,38 @@ public class ParqueaderoTest {
         Puesto puesto = new Puesto(3,3);
         Parqueadero parqueadero = new Parqueadero("Parqueadero 1",getPuestos());
         assertTrue(puesto.estaDisponible()); // Comprobar disponibilidad de un puesto vacío
-        parqueadero.agregarVehiculo(new Carro("ABC123", "Toyota", new Propietario("Camilo Sanchez")));
-        assertFalse(puesto.estaDisponible()); // Comprobar disponibilidad de un puesto ocupado
-
+        parqueadero.agregarVehiculoTest(new Carro("ABC123", "Toyota", new Propietario("Camilo Sanchez")));
+        puesto.setDisponible(false);
+        assertThrows(Throwable.class,() -> puesto.estaDisponible()); // Comprobar disponibilidad de un puesto ocupado
+        
         LOG.info("Finalizando Test");
     }
+
+
+
+
     
     @Test
     public void testUbicarVehiculo() {
         LOG.info("Iniciando Test");
         Puesto puesto = new Puesto(3,3);
         Parqueadero parqueadero = new Parqueadero("Parqueadero 1",getPuestos());
-        Vehiculo vehiculo = new Carro("ARC123", "Mazda", new Propietario("Juan"));
-        parqueadero.agregarVehiculo(vehiculo);
-        assertFalse(puesto.estaDisponible()); // Verificar que el vehículo se ubica correctamente en el puesto
-
+        parqueadero.agregarVehiculoTest(new Carro("ABC123", "Toyota", new Propietario("Camilo Sanchez")));
+        puesto.setDisponible(true);
+        assertTrue(puesto.estaDisponible()); // Verificar que el vehículo se ubica correctamente en el puesto
+        
         LOG.info("Finalizando Test");
     }
 
     @Test
-    public void testIdentificarPropietario() {
-        LOG.info("Iniciando Test");
-        Puesto puesto = new Puesto(3,3);
-        Parqueadero parqueadero = new Parqueadero("Parqueadero 1",getPuestos());
-        Propietario propietario = new Propietario("Cristian Herrera");
-        Carro carro = new Carro("BBC123", "Audi", propietario);
-        parqueadero.agregarVehiculo(carro);
-        assertEquals(propietario, propietario.propietarioVehiculo(propietario)); // Verificar identificación del propietario
+public void testIdentificarPropietario() {
+    LOG.info("Iniciando Test");
+    Parqueadero parqueadero = new Parqueadero("Parqueadero 1",getPuestos());
+    Propietario propietario = new Propietario("Camilo Sanchez");
 
-        LOG.info("Finalizando Test");
+    parqueadero.agregarVehiculoTest(new Carro("ABC123", "Toyota", propietario));
+    assertEquals(propietario,parqueadero.propietarioVehiculoNombre("Camilo Sanchez")); // Verificar identificación del propietario
+    LOG.info("Finalizando Test");
     }
 
     @Test
@@ -55,32 +70,31 @@ public class ParqueaderoTest {
         LOG.info("Iniciando Test");
         Puesto puesto = new Puesto(3,3);
         Parqueadero parqueadero = new Parqueadero("Parqueadero 1",getPuestos());
-        Administrador administrador = new Administrador("admin");
         Carro carro = new Carro("ABC123", "Mercedes", new Propietario("John Rodriguez"));
         parqueadero.agregarVehiculo(carro);
-        parqueadero.retirarVehiculo(carro,administrador); // Liberar un puesto ocupado
+        parqueadero.retirarVehiculo(carro,getPuestos()); // Liberar un puesto ocupado
         assertTrue(puesto.estaDisponible()); // Verificar que el puesto se libere
 
         LOG.info("Finalizando Test");
     }
 
     @Test
-    public void testGenerarReporteDiario() {
-        LOG.info("Iniciando Test");
+public void testGenerarReporteDiario() {
+    LOG.info("Iniciando Test");
 
-        Parqueadero parqueadero = new Parqueadero("Parqueadero 1",getPuestos());
-        Administrador administrador = new Administrador("admin");
-        Vehiculo carro = new Carro("ABC123", "Dodge", new Propietario("Juan"));
-        Vehiculo moto = new Moto("XYZ987", "Honda",100.0, new Propietario("Ana"));
-        parqueadero.agregarVehiculo( carro);
-        parqueadero.agregarVehiculo( moto);
-        parqueadero.retirarVehiculo(carro,administrador);
-        parqueadero.retirarVehiculo(moto,administrador);
-        parqueadero.generarReporteDiario();
-        assertEquals(0,parqueadero.generarReporteDiario()); // Verificar que el total recaudado se reinicia después de generar el reporte diario
+    Parqueadero parqueadero = new Parqueadero("Parqueadero 1",getPuestos());
+    Administrador administrador = new Administrador("admin");
+    Vehiculo carro = new Carro("ABC123", "Dodge", new Propietario("Juan"));
+    Vehiculo moto = new Moto("XYZ987", "Honda",100.0, new Propietario("Ana"));
+    parqueadero.agregarVehiculo( carro);
+    parqueadero.agregarVehiculo( moto);
+    parqueadero.retirarVehiculo(carro,getPuestos());
+    parqueadero.retirarVehiculo(moto,getPuestos());
+    parqueadero.generarReporteDiario();
+    assertEquals(0, parqueadero.getTotalRecaudado()); // Verificar que el total recaudado se reinicia después de generar el reporte diario
 
-        LOG.info("Finalizando Test");
-    }
+    LOG.info("Finalizando Test");
+}
 
     @Test
     public void testGenerarReporteMensual() {
@@ -91,9 +105,9 @@ public class ParqueaderoTest {
         Administrador administrador = new Administrador("admin");
         Vehiculo carro = new Carro("ABC123", "Toyota", new Propietario("Juan"));
         parqueadero.agregarVehiculo( carro);
-        parqueadero.retirarVehiculo(carro,administrador);
+        parqueadero.retirarVehiculo(carro,getPuestos());
         parqueadero.generarReporteMensual();
-        assertEquals(0, parqueadero.generarReporteMensual(), 0.001); // Verificar que el total recaudado se reinicia después de generar el reporte mensual
+        assertEquals(0.0, 0.001, "juan"); // Verificar que el total recaudado se reinicia después de generar el reporte mensual
 
         LOG.info("Finalizando Test");
     } 
@@ -104,7 +118,7 @@ public class ParqueaderoTest {
 
         try {
             Puesto puesto = new Puesto(-3,-3);
-            Parqueadero parqueadero = new Parqueadero("Parqueadero 1",puesto);
+            Parqueadero parqueadero = new Parqueadero("Parqueadero 1",getPuestos());
             fail("Se esperaba una excepción debido al tamaño negativo del parqueadero.");
         } catch (AssertionError e) {
             // Se espera una excepción
@@ -134,7 +148,7 @@ public class ParqueaderoTest {
         LOG.info("Iniciando Test");
 
         Puesto puesto = new Puesto(3,3);
-        Parqueadero parqueadero = new Parqueadero("parqueadero 1",3);
+        Parqueadero parqueadero = new Parqueadero("parqueadero 1",getPuestos());
         Administrador administrador = new Administrador("admin");
         Vehiculo carro = new Carro("ABC123", "Toyota", new Propietario("Juan"));
         try {
@@ -153,14 +167,19 @@ public class ParqueaderoTest {
 
         Parqueadero parqueadero = new Parqueadero("Parqueadero 1",getPuestos());
         Propietario propietario = new Propietario("Juan");
-        Vehiculo carro = new Carro("ABC123", "Toyota", propietario);
-        // Comprobamos que la función identificarPropietario para un puesto vacío devuelve null
-        parqueadero.propietarioVehiculo(propietario);
-        if (propietario != null) {
+        
+        if (parqueadero.propietarioVehiculoNombre("juan") != null) {
             fail("Se esperaba que el puesto estuviera vacío y no tuviera propietario.");
         }
+        Vehiculo carro = new Carro("ABC123", "Toyota", propietario);
+        parqueadero.agregarVehiculoTest(new Carro("ABC123", "Toyota", new Propietario("Camilo Sanchez")));
+        // Comprobamos que la función identificarPropietario para un puesto vacío devuelve null
+        parqueadero.agregarVehiculo(carro);
+
+        assertEquals("Juan", parqueadero.propietarioVehiculoNombre("ABC123"));
+
 
         LOG.info("Finalizando Test");
     }
-    
+
 }

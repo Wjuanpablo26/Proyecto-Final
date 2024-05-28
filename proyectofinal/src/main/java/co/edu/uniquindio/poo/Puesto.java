@@ -5,7 +5,7 @@ public class Puesto {
     private int posicionI, posicionJ;
     private boolean disponible;
     private String placa;
-    private Vehiculo vehiculo;
+    private Vehiculo vehiculos;
 
     /*
      * Constructor de la clase Puesto
@@ -48,20 +48,17 @@ public class Puesto {
         this.posicionJ = posicionJ;
     }
 
-    /*  public Vehiculo getVehiculo(){
-        return vehiculo;
-    }
 
-    public void setVehiculo(Vehiculo vehiculo){
-        this.vehiculo = vehiculo;
-    }*/
 
     /*
      * Metodo para verificar si el puesto esta disponible
      */
 
-    public boolean estaDisponible(){
-        return disponible;
+    public boolean estaDisponible() {
+        if (!this.disponible) {
+            throw new IllegalStateException("El puesto no está disponible");
+        }
+        return this.disponible;
     }
 
     public void setDisponible(boolean disponible){

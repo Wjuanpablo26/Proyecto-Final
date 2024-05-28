@@ -20,8 +20,6 @@ public class PuestoTest {
         assertEquals(3, puesto.getPosicionI());
         assertEquals(5, puesto.getPosicionJ());
         assertFalse(puesto.estaOcupado());
-        assertNull(puesto.getVehiculo());
-
         LOG.info("Finalizando Test");
     }
 

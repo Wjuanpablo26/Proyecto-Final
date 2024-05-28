@@ -17,13 +17,11 @@ public class Registro {
     /*
     *constructor de la clase Registro
     */
-public Registro(LocalTime horaIngreso,LocalTime horaSalida,Vehiculo vehiculo){
-    assert horaIngreso != null : "La hora de ingreso no puede ser nula";
-    assert horaSalida != null : "La hora de salida no puede ser nula";
+    public Registro(LocalTime horaIngreso,LocalTime horaSalida,Vehiculo vehiculo){
     this.pago=false;
     this.horaIngreso = horaIngreso;
     this.horaSalida = horaSalida;
-    this.vehiculo=vehiculo;
+    this.vehiculo = vehiculo;
     }
 
     /*
@@ -58,8 +56,9 @@ public Registro(LocalTime horaIngreso,LocalTime horaSalida,Vehiculo vehiculo){
         return vehiculo;
     }
 
-
-    
+    /*
+     * Metodo para calcular el costo total del vehiculo
+     */
     public Parqueadero getCostoTotalVehiculo(){
         return getCostoTotalVehiculo();
     }

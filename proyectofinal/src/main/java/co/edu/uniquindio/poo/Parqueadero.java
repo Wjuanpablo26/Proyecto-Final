@@ -63,6 +63,10 @@ public class Parqueadero {
         return puestos;
     }
 
+    public double getTotalRecaudado(){
+        return recaudadoDia;
+    }
+
     public void setPuestos(Puesto[][] puestos) {
         this.puestos = puestos;
     }
@@ -185,6 +189,17 @@ public class Parqueadero {
     }
 
     /*
+     * Metodo para agregar un vehiculo al parqueadero para el test
+     */
+    public void agregarVehiculoTest(Vehiculo vehiculo) {
+        assert vehiculo != null : "El vehiculo no puede ser nulo";
+        vehiculos.add(vehiculo);
+        System.out.println(vehiculo + "Objeto Vehiculo");
+        System.out.println("Vehiculo agregado correctamente\n");
+        ingresarVehiculo(vehiculo);
+    }
+
+    /*
      * Metodo para guardar un carro en la lista de vehiculos
      */
     public void guardarCarro(Carro carro){
@@ -200,6 +215,8 @@ public class Parqueadero {
             System.out.println(moto);
             vehiculos.add(moto);
     }
+
+
     /*
      * Metodo para ingresar un vehiculo del parqueadero, agrega registro y verificar si el puesto esta ocupado o disponible
      */
@@ -289,7 +306,6 @@ public class Parqueadero {
         for (Vehiculo vehiculo : vehiculos){
             if (vehiculo.getPlaca().equals(vehiculo1.getPlaca())){
                 vehiculos.remove(vehiculo);
-                System.out.println("si se le elimina de la lista");
                 return;
             }
         }
@@ -308,6 +324,19 @@ public class Parqueadero {
         return null;
     }
 
+    /*
+     * Metodo para identificar el propietario del vehiculo por el nombre
+     */
+    public Propietario propietarioVehiculoNombre(String nombre){
+        assert nombre != null : "El nombre no puede ser nulo";
+        for (Vehiculo vehiculo : vehiculos){
+            if (vehiculo.getPropietario().getNombre().equals(nombre)){
+                return vehiculo.getPropietario();
+            }
+        }
+        return null;
+    }
+
 
     /*
      * Metodo para buscar un vehiculo por placa
@@ -315,13 +344,9 @@ public class Parqueadero {
     public Vehiculo buscarVehiculo(String placa){
         assert placa != null : "La placa no puede ser nula";
         for (Vehiculo vehiculo : vehiculos){
-           System.out.println(vehiculo.getPlaca() + " Placa del vehiculo");
-           System.out.println(placa + "Placa ingresada");
             if (vehiculo.getPlaca().equalsIgnoreCase(placa)){
-                System.out.println("Sisa lo encontre");
                 return vehiculo;
             }else{
-                System.out.println("Ese mk no aparece nea");
                 return null;
             }
         }
@@ -384,6 +409,7 @@ public class Parqueadero {
     
     }
 
+    
 
     
 }
