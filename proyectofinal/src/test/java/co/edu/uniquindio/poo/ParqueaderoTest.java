@@ -45,7 +45,7 @@ public class ParqueaderoTest {
         Propietario propietario = new Propietario("Cristian Herrera");
         Carro carro = new Carro("BBC123", "Audi", propietario);
         parqueadero.agregarVehiculo(carro);
-        assertEquals(propietario, parqueadero.propietarioVehiculo(propietario)); // Verificar identificación del propietario
+        assertEquals(propietario, propietario.propietarioVehiculo(propietario)); // Verificar identificación del propietario
 
         LOG.info("Finalizando Test");
     }

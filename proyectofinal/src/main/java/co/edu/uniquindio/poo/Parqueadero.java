@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.time.LocalTime;
-
+import java.util.ArrayList;
 
 public class Parqueadero {
 
@@ -16,6 +16,7 @@ public class Parqueadero {
     public Collection<Propietario> propietarios;
     public Collection<Administrador> administradores;
     public Administrador administrador;
+    private ArrayList<Moto> listaMotos = new ArrayList<>();
 
     /*
      * Constructor de la clase Parqueadero
@@ -174,6 +175,7 @@ public class Parqueadero {
 
         assert vehiculo != null : "El vehiculo no puede ser nulo";
         vehiculos.add(vehiculo);
+        System.out.println(vehiculo + "Objeto Vehiculo");
         System.out.println("Vehiculo agregado correctamente\n");
         ingresarVehiculo(vehiculo);
         scaner.close();
@@ -182,7 +184,22 @@ public class Parqueadero {
         
     }
 
+    /*
+     * Metodo para guardar un carro en la lista de vehiculos
+     */
+    public void guardarCarro(Carro carro){
+        System.out.println(carro);
+        vehiculos.add(carro);
+    }
 
+
+    /*
+     * Metodo para guardar una moto en la lista de vehiculos
+     */
+    public void guardarMoto(Moto moto){
+            System.out.println(moto);
+            vehiculos.add(moto);
+    }
     /*
      * Metodo para ingresar un vehiculo del parqueadero, agrega registro y verificar si el puesto esta ocupado o disponible
      */
@@ -190,10 +207,11 @@ public class Parqueadero {
         for (int i = 0; i < puestos.length; i++) {
             for (int j = 0; j < puestos[i].length; j++) {
                 if(puestos[i][j].estaDisponible()){//Verifica si el puesto esta disponible
-                    puestos[i][j].setVehiculo(vehiculo);//Agrega el vehiculo al puesto
+                    puestos[i][j].setPlaca(vehiculo.getPlaca());//Agrega el vehiculo al puesto
                     puestos[i][j].setDisponible(false);//Cambia el estado del puesto a ocupado
                     Registro registro = new Registro(LocalTime.now(),null,vehiculo);
-                    registros.add(registro);
+                    System.out.println(vehiculo.getRegistro() + "Registro vehiculo");
+                    registros.add(vehiculo.getRegistro());
                     
                     System.out.println("Vehiculo ingresado correctamente en el puesto\n"+
                                         "["+i+","+j+"]\n");
@@ -211,7 +229,7 @@ public class Parqueadero {
         assert vehiculo != null : "El vehiculo no puede ser nulo";
         for (int i = 0; i < puestos.length; i++) {
             for (int j = 0; j < puestos[i].length; j++) {
-                if (puestos[i][j].getVehiculo().getPlaca().equals(vehiculo.getPlaca())){
+                if (puestos[i][j].getPlaca().equals(vehiculo.getPlaca())){
                     System.out.println("Vehiculo encontrado en el puesto\n"+
                                         "["+i+","+j+"]\n");
                     return;
@@ -245,26 +263,37 @@ public class Parqueadero {
     /*
      * Metodo para retirar un vehiculo del parqueadero
      */
-    public void retirarVehiculo(Vehiculo vehiculo, Administrador administrador){
-        assert vehiculo != null : "El vehiculo no puede ser nulo";
+    public void retirarVehiculo(Vehiculo vehiculo1, Puesto[][] puestos){
+        assert vehiculo1 != null : "El vehiculo no puede ser nulo";
         for (int i = 0; i < puestos.length; i++) {
             for (int j = 0; j < puestos[i].length; j++) {
-                if (puestos[i][j].getVehiculo().getPlaca().equals(vehiculo.getPlaca())){
-                    puestos[i][j].setVehiculo(null);
+                if(puestos[i][j].getPlaca().equals(vehiculo1.getPlaca())){
+                    puestos[i][j].setPlaca("");
                     puestos[i][j].setDisponible(true);
-                    Registro registro = new Registro(null,LocalTime.now(),vehiculo);
+                    Registro registro = new Registro(null,LocalTime.now(),vehiculo1);
                     registros.add(registro);
-                    double total = costoTotalVehiculo(vehiculo, administrador);
+                    double total = costoTotalVehiculo(vehiculo1, administrador);
                     actualizarRecaudaciones(total);
                     System.out.println("Vehiculo ha sido retirado correctamente del puesto\n"+
                                         "["+i+","+j+"]\n");
                     return;
-                }
+                }  
+            }
+        }
+        
+    } 
+
+    
+
+    public void retirarVehiculoLista(Vehiculo vehiculo1) {
+        for (Vehiculo vehiculo : vehiculos){
+            if (vehiculo.getPlaca().equals(vehiculo1.getPlaca())){
+                vehiculos.remove(vehiculo);
+                System.out.println("si se le elimina de la lista");
+                return;
             }
         }
     }
-
-    
 
     /*
      * Metodo para identificar el propietario de un vehiculo por la placa
@@ -286,8 +315,14 @@ public class Parqueadero {
     public Vehiculo buscarVehiculo(String placa){
         assert placa != null : "La placa no puede ser nula";
         for (Vehiculo vehiculo : vehiculos){
-            if (vehiculo.getPlaca().equals(placa)){
+           System.out.println(vehiculo.getPlaca() + " Placa del vehiculo");
+           System.out.println(placa + "Placa ingresada");
+            if (vehiculo.getPlaca().equalsIgnoreCase(placa)){
+                System.out.println("Sisa lo encontre");
                 return vehiculo;
+            }else{
+                System.out.println("Ese mk no aparece nea");
+                return null;
             }
         }
         return null;
@@ -351,7 +386,6 @@ public class Parqueadero {
 
 
     
-
 }
 
 

@@ -4,6 +4,7 @@ public class Puesto {
 
     private int posicionI, posicionJ;
     private boolean disponible;
+    private String placa;
     private Vehiculo vehiculo;
 
     /*
@@ -15,6 +16,7 @@ public class Puesto {
         this.posicionI = posicionI;
         this.posicionJ = posicionJ;
         this.disponible = true;
+        this.placa ="";
     }
 
     /*
@@ -22,6 +24,14 @@ public class Puesto {
      */
     public int getPosicionI(){
         return posicionI;
+    }
+
+    public String getPlaca(){
+        return placa;
+    }
+
+    public void setPlaca(String placa){
+        this.placa = placa;
     }
 
     public void setPosicionI(int posicionI){
@@ -38,13 +48,13 @@ public class Puesto {
         this.posicionJ = posicionJ;
     }
 
-    public Vehiculo getVehiculo(){
+    /*  public Vehiculo getVehiculo(){
         return vehiculo;
     }
 
     public void setVehiculo(Vehiculo vehiculo){
         this.vehiculo = vehiculo;
-    }
+    }*/
 
     /*
      * Metodo para verificar si el puesto esta disponible
@@ -66,8 +76,5 @@ public class Puesto {
 
     
 
-    }
-
-
-    
+    }    
 }
